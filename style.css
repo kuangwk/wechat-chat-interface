@@ -69,7 +69,9 @@ main {
    padding-bottom: 10px;
 }
 
-main::-webkit-scrollbar {display:none}
+main::-webkit-scrollbar {
+    display:none
+}
 
 .message-item {
     width: 100%;
