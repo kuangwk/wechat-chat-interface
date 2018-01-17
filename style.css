@@ -23,6 +23,7 @@ header {
     z-index: 1;
 }
 
+
 .icon {
     display: inline-block;
     background-repeat: no-repeat;
@@ -244,7 +245,7 @@ footer, main, .message-select {
     bottom: 0;
     right: 0;
     background-color: rgba(0, 0, 0, .3);
-    position: fixed;
+    position: absolute;
     z-index: 100;
 }
 
@@ -287,4 +288,13 @@ footer, main, .message-select {
 
 .icon-share {
     background-image: url('./img/icon/share.svg');
+}
+
+/* 如果在微信里面, 隐藏头部做的 */
+body.wechat header {
+    display: none
+}
+
+body.wechat main {
+    top: 0;
 }

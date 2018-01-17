@@ -1,7 +1,7 @@
 (function () {
 
-    girlMessages = ['你好!', '我肚子疼', '这个瓶盖好紧']
-    boyMessage = [
+    const girlMessages = ['你好!', '我肚子疼', '这个瓶盖好紧']
+    const boyMessage = [
         [{
             text: 'hello',
             score: 0
@@ -31,24 +31,23 @@
             score: 3
         }]
     ]
-
     const resultMsg = [{
-            score: 4,
-            tips: '超级棒',
-            girlSay: '你真贴心',
-        }, {
-            score: 0,
-            tips: '还行吧',
-            girlSay: '哦',
-        }, {
-            score: -2,
-            tips: '你走远了',
-            girlSay: '呵呵',
-        }, {
-            score: -10,
-            tips: '你已经被拉黑',
-            girlSay: '再见',
-        }]
+        score: 4,
+        tips: '超级棒',
+        girlSay: '你真贴心',
+    }, {
+        score: 0,
+        tips: '还行吧',
+        girlSay: '哦',
+    }, {
+        score: -2,
+        tips: '你走远了',
+        girlSay: '呵呵',
+    }, {
+        score: -10,
+        tips: '你已经被拉黑',
+        girlSay: '再见',
+    }]
 
 
     const input = document.querySelector('.js-input');
@@ -188,6 +187,8 @@
         if (step < maxStep) {
             setTimeout(() => {
                 changeSelectMessage(step);
+            }, 300);
+            setTimeout(() => {
                 appendGirlMessage(step);
             }, 1000);
         } else {
@@ -195,7 +196,18 @@
         }
     }
 
+    function isWeixinBrowser(){
+        return /micromessenger/.test(navigator.userAgent.toLowerCase())
+    }
+
+    function checkBrowser() {
+        if (isWeixinBrowser()) {
+            document.body.classList.add('wechat');
+        }
+    }
+
     function init() {
+        checkBrowser();
         bindEvents();
         start();
     }
