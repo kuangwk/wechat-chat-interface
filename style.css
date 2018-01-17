@@ -261,6 +261,7 @@ footer, main, .message-select {
     z-index: 101;
     display: flex;
     flex-direction: column;
+    transform: translateY(-50%);
     padding: 20px;
 }
 

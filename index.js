@@ -58,7 +58,7 @@
     const tips = document.querySelector('.cover-tips');
 
 
-    const classToAdd = 'show-selector';
+    const showSelectorClass = 'show-selector';
     const maxStep = girlMessages.length;
     let score = 0; // 总分数
 
@@ -82,11 +82,16 @@
         }, timeout || 0)
     }
 
+    function showSelect() {
+        addClass(wrapper, showSelectorClass);
+        scrollToBottom(main, 400);
+    }
+
     function bindEvents() {
-        input.addEventListener('touchend', (e) => {
-            addClass(wrapper, classToAdd);
-            scrollToBottom(main, 400);
-        });
+        // input.addEventListener('touchend', (e) => {
+        //     addClass(wrapper, showSelectorClass);
+        //     scrollToBottom(main, 400);
+        // });
 
         // 实现事件委托
         selectList.addEventListener('touchend', (event) => {
@@ -149,10 +154,6 @@
     }
 
     let step = 0;
-    function start() {
-        appendGirlMessage(step);
-        changeSelectMessage(step);
-    }
 
     function getResultByScore(score) {
         let result = resultMsg[0];
@@ -182,18 +183,22 @@
     }
 
     function nextStep() {
-        step += 1;
-        removeClass(wrapper, classToAdd);
+        currentStep = step;
+        removeClass(wrapper, showSelectorClass);
         if (step < maxStep) {
             setTimeout(() => {
-                changeSelectMessage(step);
+                changeSelectMessage(currentStep);
             }, 300);
             setTimeout(() => {
-                appendGirlMessage(step);
+                appendGirlMessage(currentStep);
+                setTimeout(()=> {
+                    showSelect()
+                }, 1000);
             }, 1000);
         } else {
             showResult();
         }
+        step += 1;
     }
 
     function isWeixinBrowser(){
@@ -209,7 +214,7 @@
     function init() {
         checkBrowser();
         bindEvents();
-        start();
+        nextStep();
     }
 
     init();
