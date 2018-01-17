@@ -174,9 +174,8 @@ footer .icon:last-child {
     margin-right: 10px;
 }
 
-footer input {
+footer .text-input{
     flex: 1;
-    width: 1%;
     margin-left: 10px;
     height: 36px;
     border: 1px solid #ddd;
