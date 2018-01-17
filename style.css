@@ -216,7 +216,7 @@ footer .icon-face{
 }
 
 footer, main, .message-select {
-    transition: bottom .4s;
+    transition: bottom .3s;
 }
 
 .message-select {
