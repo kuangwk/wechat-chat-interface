@@ -193,7 +193,7 @@
                 appendGirlMessage(currentStep);
                 setTimeout(()=> {
                     showSelect()
-                }, 1000);
+                }, 300);
             }, 1000);
         } else {
             showResult();
