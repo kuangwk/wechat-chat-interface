@@ -3,6 +3,11 @@ body {
     height: 100%;
 }
 
+.wrapper {
+    width: 100%;
+    height: 100%;
+}
+
 header {
     height: 44px;
     background: #2b2b2b;
@@ -15,6 +20,7 @@ header {
     top: 0;
     left: 0;
     width: 100%;
+    z-index: 1;
 }
 
 .icon {
@@ -150,6 +156,7 @@ footer {
     bottom: 0;
     height: 50px;
     border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
     background-color: #f5f5f7;
     width: 100%;
     display: flex;
@@ -186,4 +193,98 @@ footer .icon-plus {
 
 footer .icon-face{
     background-image: url('./img/icon/smile-face.svg');
+}
+
+.message-select {
+    height: 200px;
+    bottom: -200px;
+    position: fixed;
+    width: 100%;
+}
+
+.show-selector footer {
+    bottom: 200px;
+}
+
+.show-selector main {
+    bottom: 250px;
+}
+
+.show-selector .message-select {
+    bottom: 0;
+}
+
+footer, main, .message-select {
+    transition: bottom .3s;
+}
+
+.message-select {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.message-select .message-item {
+    display: flex;
+    justify-content: center;
+}
+
+.cover-tips {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.mask {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, .3);
+    position: fixed;
+    z-index: 100;
+}
+
+.hide {
+    display: none;
+}
+
+.tips-container {
+    width: 200px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    z-index: 101;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.tips-text {
+    width: 100%;
+    line-height: 30px;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.tips-icons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.icon-replay, .icon-share {
+    width: 40px;
+    height: 40px;
+}
+
+.icon-replay {
+    background-image: url('./img/icon/replay.svg');
+}
+
+.icon-share {
+    background-image: url('./img/icon/share.svg');
 }
