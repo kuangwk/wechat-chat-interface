@@ -236,6 +236,8 @@
         hideLoading();
     }
 
-    init();
+    window.onload = function() {
+        init();
+    }
 
 }())
