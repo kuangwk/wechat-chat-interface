@@ -49,13 +49,14 @@
         girlSay: '再见',
     }]
 
-
     const input = document.querySelector('.js-input');
     const wrapper = document.querySelector('.wrapper');
     const main = document.querySelector('main');
     const messageList = document.querySelector('.message-list');
     const selectList = document.querySelector('.message-select');
     const tips = document.querySelector('.cover-tips');
+    const wechatPage = document.querySelector('.wechat-page');
+    const firstPage = document.querySelector('.first-page');
 
 
     const showSelectorClass = 'show-selector';
@@ -113,6 +114,19 @@
         document.querySelector('.icon-replay').addEventListener('touchend', (event)=> {
             window.location.reload();
         })
+
+        document.querySelector('.btn-continue').addEventListener('touchend', (event)=> {
+            removeClass(wechatPage, 'hide');
+            fadeout(firstPage);
+            nextStep();
+        })
+    }
+
+    function fadeout(element, duration) {
+        addClass(element, 'fadeout');
+        setTimeout(()=> {
+            element.remove();
+        }, duration || 300);
     }
 
     function strToDomObj(str) {
@@ -211,10 +225,15 @@
         }
     }
 
+    function hideLoading() {
+        const loading = document.querySelector('.loading');
+        fadeout(loading);
+    }
+
     function init() {
         checkBrowser();
         bindEvents();
-        nextStep();
+        hideLoading();
     }
 
     init();
