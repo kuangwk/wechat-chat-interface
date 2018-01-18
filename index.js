@@ -230,10 +230,23 @@
         fadeout(loading);
     }
 
+    function preloadImg(src) {
+        const img = new Image();
+        img.src = src;
+    }
+
+    function preloadImages() {
+        preloadImg('./img/boy.png');
+        preloadImg('./img/girl.png');
+        preloadImg('./img/icon/replay.svg');
+        preloadImg('./img/icon/share.svg');
+    }
+
     function init() {
         checkBrowser();
         bindEvents();
         hideLoading();
+        preloadImages();
     }
 
     window.onload = function() {
