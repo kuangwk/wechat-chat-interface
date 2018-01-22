@@ -1,6 +1,13 @@
 (function () {
 
-    // 一些用到的 DOM
+    function getHash(key) {
+        const match = window.location.hash.match(new RegExp(`${key}=([^&]*)`));
+        return match ? match[1] : '';
+    }
+
+    const theme = getHash('theme') || 'NEW_YEAR';
+    const CONFIG = window[theme];
+
     const input = document.querySelector('.js-input');
     const wrapper = document.querySelector('.wrapper');
     const main = document.querySelector('main');
@@ -11,8 +18,8 @@
     const firstPage = document.querySelector('.first-page');
 
 
-    const showSelectorClass = 'show-selector';
     const maxStep = CONFIG.messages.length;
+    const selectorAnimationDuration = 300;
     let score = 0; // 总分数
     let step = 0;
 
@@ -56,7 +63,6 @@
     function changeTitle(title) {
         document.title = title;
     }
-
     /* ----  end of util ----- */
 
     function bindEvents() {
@@ -69,7 +75,7 @@
                 if (target.classList.contains('js-to-select')) {
                     const currentScore = +target.getAttribute('data-score');
                     const message = target.querySelector('.message-bubble').innerText;
-                    appendMessage('boy', message);
+                    appendMessage('right', message);
                     score += currentScore;
                     nextStep();
                     return;
@@ -89,10 +95,14 @@
         })
     }
 
-
-    function showSelect() {
-        addClass(wrapper, showSelectorClass);
-        scrollToBottom(main, 400);
+    function toggleSelector(isShow) {
+        let className = 'show-selector';
+        if (isShow) {
+            addClass(wrapper, className);
+            scrollToBottom(main, 400);
+        } else {
+            removeClass(wrapper, className);
+        }
     }
 
     function getMessageStr(side, message) {
@@ -104,7 +114,7 @@
 
     function getSelectMsgStr(messageObj) {
         return `<div class="message-item message-item--right js-to-select" data-score=${messageObj.score}>
-                <img class="avatar" src="./img/boy.png" alt="头像">
+                <img class="avatar" src="${CONFIG.avatar.right}" alt="头像">
                 <div class="message-bubble">${messageObj.text}</div>
             </div>`;
     }
@@ -123,8 +133,8 @@
         selectList.innerHTML = str;
     }
 
-    function appendLeftMessage(stepOrMessage) {
-        appendMessage('left', CONFIG.messages[stepOrMessage].left || stepOrMessage);
+    function appendLeftMessage(step) {
+        appendMessage('left', CONFIG.messages[step].left);
     }
 
     function getResultByScore(score) {
@@ -143,7 +153,7 @@
     function showResult() {
         setTimeout(() => {
             const resultObj = getResultByScore(score);
-            appendLeftMessage(resultObj.say);
+            appendMessage('left', resultObj.say);
             // 显示结果窗口
             setTimeout(()=> {
                 let text = ''
@@ -156,17 +166,17 @@
 
     function nextStep() {
         currentStep = step;
-        removeClass(wrapper, showSelectorClass);
+        toggleSelector(false);
         if (step < maxStep) {
             setTimeout(() => {
                 changeSelectMessage(currentStep);
-            }, 300);
+            }, selectorAnimationDuration);
             setTimeout(() => {
                 appendLeftMessage(currentStep);
                 setTimeout(()=> {
-                    showSelect()
-                }, 300);
-            }, 1000);
+                    toggleSelector(true);
+                }, 300);  // 0.3s后显示选择框
+            }, 1000); // 延时1s显示小时
         } else {
             showResult();
         }
@@ -198,7 +208,9 @@
     }
 
     function setWording() {
+        document.title = CONFIG.title;
         document.querySelector('.first-page-text').innerText = CONFIG.firstPage;
+        document.querySelector('.nav-name').innerText = CONFIG.name;
     }
 
     function init() {
