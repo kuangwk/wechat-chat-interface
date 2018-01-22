@@ -1,5 +1,6 @@
 (function () {
 
+    // 一些用到的 DOM
     const input = document.querySelector('.js-input');
     const wrapper = document.querySelector('.wrapper');
     const main = document.querySelector('main');
@@ -11,13 +12,14 @@
 
 
     const showSelectorClass = 'show-selector';
-    const maxStep = girlMessages.length;
+    const maxStep = CONFIG.messages.length;
     let score = 0; // 总分数
+    let step = 0;
 
+    // util 函数
     function hasClass(element, className) {
         return element.classList.contains(className);
     }
-
 
     function removeClass(element, className) {
         element.classList.remove(className);
@@ -34,16 +36,30 @@
         }, timeout || 0)
     }
 
-    function showSelect() {
-        addClass(wrapper, showSelectorClass);
-        scrollToBottom(main, 400);
+    function fadeout(element, duration) {
+        addClass(element, 'fadeout');
+        setTimeout(()=> {
+            element.remove();
+        }, duration || 300);
     }
 
+    function strToDomObj(str) {
+        const div = document.createElement('div');
+        div.innerHTML = str;
+        return div.firstChild;
+    }
+
+    function isWeixinBrowser(){
+        return /micromessenger/.test(navigator.userAgent.toLowerCase())
+    }
+
+    function changeTitle(title) {
+        document.title = title;
+    }
+
+    /* ----  end of util ----- */
+
     function bindEvents() {
-        // input.addEventListener('touchend', (e) => {
-        //     addClass(wrapper, showSelectorClass);
-        //     scrollToBottom(main, 400);
-        // });
 
         // 实现事件委托
         selectList.addEventListener('touchend', (event) => {
@@ -73,22 +89,15 @@
         })
     }
 
-    function fadeout(element, duration) {
-        addClass(element, 'fadeout');
-        setTimeout(()=> {
-            element.remove();
-        }, duration || 300);
+
+    function showSelect() {
+        addClass(wrapper, showSelectorClass);
+        scrollToBottom(main, 400);
     }
 
-    function strToDomObj(str) {
-        const div = document.createElement('div');
-        div.innerHTML = str;
-        return div.firstChild;
-    }
-
-    function getMessageStr(who, message) {
-        return `<div class="message-item message-item--${who === 'boy' ? 'right' : 'left'}">
-                <img class="avatar" src="./img/${who === 'boy' ? 'boy': 'aunt'}.png" alt="头像">
+    function getMessageStr(side, message) {
+        return `<div class="message-item message-item--${side}">
+                <img class="avatar" src="${CONFIG.avatar[side]}" alt="头像">
                 <div class="message-bubble">${message}</div>
             </div>`;
     }
@@ -100,13 +109,13 @@
             </div>`;
     }
 
-    function appendMessage(who, message) {
-        const msgDom = strToDomObj(getMessageStr(who, message));
+    function appendMessage(side, message) {
+        const msgDom = strToDomObj(getMessageStr(side, message));
         messageList.appendChild(msgDom);
     }
 
     function changeSelectMessage(step) {
-        const messageToSelect = boyMessage[step];
+        const messageToSelect = CONFIG.messages[step].right;
         let str = '';
         messageToSelect.forEach(message => {
             str += getSelectMsgStr(message);
@@ -114,16 +123,14 @@
         selectList.innerHTML = str;
     }
 
-    function appendGirlMessage(stepOrMessage) {
-        appendMessage('girl', girlMessages[stepOrMessage] || stepOrMessage);
+    function appendLeftMessage(stepOrMessage) {
+        appendMessage('left', CONFIG.messages[stepOrMessage].left || stepOrMessage);
     }
 
-    let step = 0;
-
     function getResultByScore(score) {
-        let result = resultMsg[0];
+        const resultMsg = CONFIG.result;
+        let result =  resultMsg[0];
         resultMsg.every((resultObj)=> {
-            console.log(score, resultObj.score);
             if (score >= resultObj.score) {
                 result = resultObj
                 return false;
@@ -136,7 +143,7 @@
     function showResult() {
         setTimeout(() => {
             const resultObj = getResultByScore(score);
-            appendGirlMessage(resultObj.girlSay);
+            appendLeftMessage(resultObj.say);
             // 显示结果窗口
             setTimeout(()=> {
                 let text = ''
@@ -155,7 +162,7 @@
                 changeSelectMessage(currentStep);
             }, 300);
             setTimeout(() => {
-                appendGirlMessage(currentStep);
+                appendLeftMessage(currentStep);
                 setTimeout(()=> {
                     showSelect()
                 }, 300);
@@ -166,9 +173,6 @@
         step += 1;
     }
 
-    function isWeixinBrowser(){
-        return /micromessenger/.test(navigator.userAgent.toLowerCase())
-    }
 
     function checkBrowser() {
         if (isWeixinBrowser()) {
@@ -181,26 +185,25 @@
         fadeout(loading);
     }
 
-    function changeTitle(title) {
-        document.title = title;
-    }
-
     function preloadImg(src) {
         const img = new Image();
         img.src = src;
     }
 
     function preloadImages() {
-        preloadImg('./img/boy.png');
-        preloadImg('./img/girl.png');
-        preloadImg('./img/aunt.png');
-        preloadImg('./img/question.png');
+        preloadImg(CONFIG.avatar.left);
+        preloadImg(CONFIG.avatar.right);
         preloadImg('./img/icon/replay.svg');
         preloadImg('./img/icon/share.svg');
     }
 
+    function setWording() {
+        document.querySelector('.first-page-text').innerText = CONFIG.firstPage;
+    }
+
     function init() {
         checkBrowser();
+        setWording();
         bindEvents();
         hideLoading();
         preloadImages();
