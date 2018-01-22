@@ -1,54 +1,5 @@
 (function () {
 
-    const girlMessages = ['你好!', '我肚子疼', '这个瓶盖好紧']
-    const boyMessage = [
-        [{
-            text: 'hello',
-            score: 0
-        }, {
-            text: '美女，发个真人照片呗',
-            score: -3
-        }, {
-            text: '你好，你的头像很可爱',
-            score: 1
-        }], [{
-            text: '多喝热水',
-            score: -1
-        }, {
-            text: '我已经在美团买了姜茶了',
-            score: 1
-        }, {
-            text: '开门，我买了姜茶在门口',
-            score: 3
-        }],[{
-            text: '大力点，可以的',
-            score: -1
-        }, {
-            text: '别装了，上次看你开都没问题',
-            score: -2
-        }, {
-            text: '我来帮你开',
-            score: 3
-        }]
-    ]
-    const resultMsg = [{
-        score: 4,
-        tips: '超级棒',
-        girlSay: '你真贴心',
-    }, {
-        score: 0,
-        tips: '还行吧',
-        girlSay: '哦',
-    }, {
-        score: -2,
-        tips: '你走远了',
-        girlSay: '呵呵',
-    }, {
-        score: -10,
-        tips: '你已经被拉黑',
-        girlSay: '再见',
-    }]
-
     const input = document.querySelector('.js-input');
     const wrapper = document.querySelector('.wrapper');
     const main = document.querySelector('main');
@@ -137,7 +88,7 @@
 
     function getMessageStr(who, message) {
         return `<div class="message-item message-item--${who === 'boy' ? 'right' : 'left'}">
-                <img class="avatar" src="./img/${who}.png" alt="头像">
+                <img class="avatar" src="./img/${who === 'boy' ? 'boy': 'aunt'}.png" alt="头像">
                 <div class="message-bubble">${message}</div>
             </div>`;
     }
@@ -228,6 +179,10 @@
     function hideLoading() {
         const loading = document.querySelector('.loading');
         fadeout(loading);
+    }
+
+    function changeTitle(title) {
+        document.title = title;
     }
 
     function preloadImg(src) {
