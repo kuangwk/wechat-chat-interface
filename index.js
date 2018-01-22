@@ -140,16 +140,20 @@
         return result;
     }
 
+    function showTips() {
+        tips.querySelector('.tips-text').innerText = `分数：${score}
+        ${resultObj.tips}`;
+        tips.classList.remove('hide');
+    }
+
     function showResult() {
         setTimeout(() => {
+            // 显示左边最后的对话
             const resultObj = getResultByScore(score);
             appendLeftMessage(resultObj.say);
-            // 显示结果窗口
+            // 延时 1s 显示结果窗口
             setTimeout(()=> {
-                let text = ''
-                tips.querySelector('.tips-text').innerText = `分数：${score}
-                ${resultObj.tips}`;
-                tips.classList.remove('hide');
+                showTips()
             }, 1000);
         }, 1000);
     }
