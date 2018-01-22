@@ -193,6 +193,7 @@
     function preloadImages() {
         preloadImg('./img/boy.png');
         preloadImg('./img/girl.png');
+        preloadImg('./img/aunt.png');
         preloadImg('./img/icon/replay.svg');
         preloadImg('./img/icon/share.svg');
     }
