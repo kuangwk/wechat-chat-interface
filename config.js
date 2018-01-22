@@ -40,7 +40,7 @@ const boyMessage = [
         text: '还没有什么打算。',
         score: 1
     }, {
-        text: '一般，我刚买了个表',
+        text: '多多努力，向您学习。',
         score: 3
     }, {
         text: '凑钱把房子买了，阿姨打算给我多少红包呀？',
