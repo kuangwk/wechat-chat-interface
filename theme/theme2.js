@@ -12,7 +12,7 @@ window.QUESTION = {
       text: '绿茶',
       score: 0
     }, {
-      text: '黑茶。',
+      text: '黑茶',
       score: 0
     }, {
       text: '红茶',
