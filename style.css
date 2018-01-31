@@ -242,3 +242,67 @@ footer, main, .message-select {
     display: flex;
     justify-content: center;
 }
+
+/* cover-tips */
+.cover-tips {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.mask {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, .3);
+    position: absolute;
+    z-index: 100;
+}
+
+.hide {
+    display: none;
+}
+
+.tips-container {
+    width: 200px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    z-index: 101;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(-10%);
+    padding: 20px;
+}
+
+.tips-text {
+    width: 100%;
+    line-height: 30px;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.tips-icons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.icon-replay, .icon-share {
+    width: 40px;
+    height: 40px;
+}
+
+.icon-replay {
+    background-image: url('./img/icon/replay.svg');
+}
+
+.icon-share {
+    background-image: url('./img/icon/share.svg');
+}
